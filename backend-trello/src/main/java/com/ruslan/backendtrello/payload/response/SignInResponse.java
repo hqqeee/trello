@@ -8,4 +8,5 @@ import lombok.*;
 public class SignInResponse {
     private final String result;
     private String token;
+    private String refreshToken;
 }

@@ -2,8 +2,10 @@ package com.ruslan.backendtrello.controller;
 
 import com.ruslan.backendtrello.payload.request.SignInRequest;
 import com.ruslan.backendtrello.payload.request.SignUpRequest;
+import com.ruslan.backendtrello.payload.request.TokenRefreshRequest;
 import com.ruslan.backendtrello.payload.response.SignInResponse;
 import com.ruslan.backendtrello.payload.response.SignUpResponse;
+import com.ruslan.backendtrello.payload.response.TokenRefreshResponse;
 import com.ruslan.backendtrello.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +26,16 @@ public class AuthController {
         return ResponseEntity.ok(signInResponse);
     }
 
-    @PostMapping("signup")
+    @PostMapping("/signup")
     public ResponseEntity<SignUpResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest){
         SignUpResponse signUpResponse = authService.registerUser(signUpRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(signUpResponse);
     }
 
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenRefreshResponse> refreshToken
+            (@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest){
+        TokenRefreshResponse tokenRefreshResponse = authService.refreshToken(tokenRefreshRequest);
+        return ResponseEntity.ok(tokenRefreshResponse);
+    }
 }

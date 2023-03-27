@@ -19,9 +19,13 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    public String generateJwtToken(Authentication authentication){
+    public String generateJwtToken(Authentication authentication) {
+        return generateJwtToken(authentication.getName());
+    }
+
+    public String generateJwtToken(String email){
         return Jwts.builder()
-                .setSubject(((UserDetails) authentication.getPrincipal()).getUsername())
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
