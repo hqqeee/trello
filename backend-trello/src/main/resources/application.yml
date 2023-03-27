@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/trello_db
+    username: trello_user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+trello:
+  app:
+    jwtSecret: RyI7V2Q^OuN7VahKf6gk7zUOauI+tkPn
+    jwtExpirationMs: 60000
