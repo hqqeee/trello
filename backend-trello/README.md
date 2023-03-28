@@ -1,6 +1,8 @@
+All API calls are private except those that begin with `/api/auth`.
+
 ## API Calls for Authentication
 
-This table shows the API calls available for authentication. All API calls are private except those that begin with `/api/auth`.
+This table shows the API calls available for authentication. 
 
 | Route              | Method | Request Body                                   | Response                                                                                   |
 |--------------------|--------|------------------------------------------------|--------------------------------------------------------------------------------------------|
