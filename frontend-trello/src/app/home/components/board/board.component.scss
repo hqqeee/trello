@@ -1,0 +1,73 @@
+$font-stack: "Segoe UI", Arial, sans-serif;
+$main-font-color: #333;
+$backgroud-1: #ff66aa;
+$backgroud-2: #fcb045;
+$main-1: #635985;
+$main-2: #443C68;
+$main-3: #393053;
+$main-4: #18122B;
+.board {
+  background: $backgroud-1;
+  background: linear-gradient(317deg, $backgroud-1 0%, $backgroud-2 100%);
+  padding: 5px 20px 20px;
+  h3{
+    font-family: $font-stack;
+    font-size: 36px;
+    font-weight: bold;
+    color: $main-font-color;
+  }
+  .list-container{
+    width: 100%;
+    overflow-x: auto;
+    .list-wrapper{
+      display: flex;
+      flex-wrap: nowrap;
+      .list{
+        flex: 0 0 auto;
+        width: 200px;
+        margin-right: 20px;
+      }
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: $main-1;
+  }
+  /* Style the button */
+  button {
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    padding: 10px;
+    background-color: $main-1;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+  }
+  button:hover {
+    background-color: $main-2;
+    cursor: pointer;
+  }
+  button:active {
+    background-color: $main-3;
+    box-shadow: none;
+    transform: translateY(5px);
+  }
+}

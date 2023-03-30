@@ -1,0 +1,49 @@
+$font-stack: "Segoe UI", Arial, sans-serif;
+$main-font-color: #333;
+$backgroud-1: #ff66aa;
+$backgroud-2: #fcb045;
+$main-1: #635985;
+$main-2: #443C68;
+$main-3: #393053;
+$main-4: #18122B;
+
+.list-container {
+  background-color: $main-4;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  color: white;
+  font-family: $font-stack;
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: $main-1;
+    border-radius: 5px;
+  }
+  button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: $main-1;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+  }
+  button:hover {
+    background-color: $main-2;
+    cursor: pointer;
+  }
+  button:active {
+    background-color: $main-3;
+    box-shadow: none;
+    transform: translateY(5px);
+  }
+}
