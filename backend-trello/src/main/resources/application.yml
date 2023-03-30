@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/trello_db
-    username: trello_user
-    password: password
+    url: jdbc:postgresql://localhost:5432/trello
+    username: truser
+    password: trpass
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -12,7 +12,14 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-
+  data:
+    mongodb:
+      authentication-database: admin
+      username: truser
+      password: truser
+      port: 27017
+      host: localhost
+      database: trello
 trello:
   app:
     jwtSecret: RyI7V2Q^OuN7VahKf6gk7zUOauI+tkPn
