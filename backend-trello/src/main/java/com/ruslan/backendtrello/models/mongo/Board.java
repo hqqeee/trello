@@ -21,7 +21,6 @@ public class Board {
     private String title;
     private Object custom;
     private java.util.List<Long> ownersId;
-    @DBRef
     private java.util.List<List> lists;
     @Transient
     public static final String SEQUENCE_NAME = "boards_sequence";

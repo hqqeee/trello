@@ -30,6 +30,17 @@ public class BoardService {
         return convertBoardDetailed(board, owners);
     }
 
+    public Optional<Board> getBoardById(Long id, Optional<User> user){
+        if(user.isPresent()){
+            Board board = boardRepository.findById(id)
+                    .orElseThrow(() -> new BoardNotFoundException("Board with id " + id + " not found."));
+            if(board.getOwnersId().contains(user.get().getId())){
+                return Optional.of(board);
+            }
+        }
+        return Optional.empty();
+    }
+
     public BoardCreatedResponse addBoard(CreateBoardRequest createBoardRequest, Long userId) {
         try {
             Board board = boardRepository.save(
