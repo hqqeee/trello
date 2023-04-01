@@ -1,6 +1,6 @@
 package com.ruslan.backendtrello.service;
 
-import com.ruslan.backendtrello.models.RefreshToken;
+import com.ruslan.backendtrello.models.sql.RefreshToken;
 import com.ruslan.backendtrello.repository.RefreshTokenRepository;
 import com.ruslan.backendtrello.repository.UserRepository;
 import com.ruslan.backendtrello.service.exception.TokenRefreshException;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Ref;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;

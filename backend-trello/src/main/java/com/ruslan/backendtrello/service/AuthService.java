@@ -1,8 +1,8 @@
 package com.ruslan.backendtrello.service;
 
-import com.ruslan.backendtrello.models.RefreshToken;
-import com.ruslan.backendtrello.models.Role;
-import com.ruslan.backendtrello.models.User;
+import com.ruslan.backendtrello.models.sql.RefreshToken;
+import com.ruslan.backendtrello.models.sql.Role;
+import com.ruslan.backendtrello.models.sql.User;
 import com.ruslan.backendtrello.payload.request.SignInRequest;
 import com.ruslan.backendtrello.payload.request.SignUpRequest;
 import com.ruslan.backendtrello.payload.request.TokenRefreshRequest;

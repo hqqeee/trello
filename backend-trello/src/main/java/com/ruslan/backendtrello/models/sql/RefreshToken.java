@@ -1,4 +1,4 @@
-package com.ruslan.backendtrello.models;
+package com.ruslan.backendtrello.models.sql;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

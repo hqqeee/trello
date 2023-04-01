@@ -1,6 +1,7 @@
 import { Board } from '../types/board';
 
 export const board: Board = {
+  id: 5,
   title: 'My test board',
   lists: [
     {
@@ -112,7 +113,8 @@ export const board: Board = {
         { id: 5, title: 'homework' },
         { id: 6, title: 'walk with the dog' },
       ],
-    },{
+    },
+    {
       id: 1,
       title: 'Plans',
       cards: [

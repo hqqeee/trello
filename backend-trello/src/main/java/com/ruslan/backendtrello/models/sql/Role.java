@@ -1,4 +1,4 @@
-package com.ruslan.backendtrello.models;
+package com.ruslan.backendtrello.models.sql;
 
 public enum Role {
     ROLE_USER,

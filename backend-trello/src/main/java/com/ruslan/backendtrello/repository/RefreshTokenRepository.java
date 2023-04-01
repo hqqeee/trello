@@ -1,9 +1,8 @@
 package com.ruslan.backendtrello.repository;
 
-import com.ruslan.backendtrello.models.RefreshToken;
-import com.ruslan.backendtrello.models.User;
+import com.ruslan.backendtrello.models.sql.RefreshToken;
+import com.ruslan.backendtrello.models.sql.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 
 import java.util.Optional;
 

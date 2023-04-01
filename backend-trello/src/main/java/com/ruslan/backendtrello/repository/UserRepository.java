@@ -1,6 +1,6 @@
 package com.ruslan.backendtrello.repository;
 
-import com.ruslan.backendtrello.models.User;
+import com.ruslan.backendtrello.models.sql.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

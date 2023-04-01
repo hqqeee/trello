@@ -1,0 +1,43 @@
+$main-1: #635985;
+$main-2: #443C68;
+$main-3: #393053;
+$main-4: #18122B;
+
+.board-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  .board{
+    background-color: $main-3;
+    color: #fff;
+    border-radius: 5px;
+    padding: 16px;
+    margin-inline: 10px;
+    transition: transform 0.2s ease-in-out;
+  }
+  .board:hover{
+    background-color: $main-2;
+  }
+  button {
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    padding: 10px;
+    background-color: $main-1;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+  }
+  button:hover {
+    background-color: $main-2;
+    cursor: pointer;
+  }
+  button:active {
+    background-color: $main-3;
+    box-shadow: none;
+    transform: translateY(5px);
+  }
+}

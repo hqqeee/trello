@@ -11,5 +11,5 @@ import { List } from '../../../types/list';
 export class BoardComponent {
   title: string = board.title;
 
-  lists: List[] = board.lists;
+  lists?: List[] = board.lists;
 }
