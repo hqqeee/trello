@@ -16,7 +16,7 @@ spring:
     mongodb:
       authentication-database: admin
       username: truser
-      password: truser
+      password: trpass
       port: 27017
       host: localhost
       database: trello

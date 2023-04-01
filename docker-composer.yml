@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     mongodb:
-        image: mongo:latest
+        image: mongo
         container_name: mongodb
         ports:
           - 27017:27017
@@ -10,6 +10,8 @@ services:
         environment:
           - MONGO_INITDB_ROOT_USERNAME=truser
           - MONGO_INITDB_ROOT_PASSWORD=trpass
+          - MONGO_INITDB_DATABASE=trello
+          - MONGO_INITDB_AUTHENTICATION_DATABASE=admin
     postgres:
       image: postgres
       restart: always

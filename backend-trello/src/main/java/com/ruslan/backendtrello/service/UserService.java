@@ -21,4 +21,9 @@ public class UserService {
     public List<User> getUsersByIds(List<Long> ids){
         return userRepository.findAllById(ids);
     }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with email " + email + " not found"));
+    }
 }
