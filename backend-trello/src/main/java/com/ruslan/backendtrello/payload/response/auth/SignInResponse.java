@@ -1,4 +1,4 @@
-package com.ruslan.backendtrello.payload.response;
+package com.ruslan.backendtrello.payload.response.auth;
 
 import lombok.*;
 

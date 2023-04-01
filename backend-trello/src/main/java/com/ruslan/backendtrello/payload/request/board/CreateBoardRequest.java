@@ -1,4 +1,4 @@
-package com.ruslan.backendtrello.payload.request;
+package com.ruslan.backendtrello.payload.request.board;
 
 import jakarta.validation.constraints.NotBlank;
 

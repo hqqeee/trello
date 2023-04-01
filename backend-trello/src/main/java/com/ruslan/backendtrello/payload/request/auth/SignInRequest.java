@@ -1,4 +1,4 @@
-package com.ruslan.backendtrello.payload.request;
+package com.ruslan.backendtrello.payload.request.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -6,9 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class TokenRefreshRequest {
+@NoArgsConstructor
+public class SignInRequest {
     @NotBlank
-    public String refreshToken;
+    private String email;
+    @NotBlank
+    private String password;
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoardRepository extends MongoRepository<Board, Long> {
+    public java.util.List<Board> findByOwnersIdContains(Long userId);
 }
