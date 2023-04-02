@@ -3,6 +3,7 @@ package com.ruslan.backendtrello.service;
 import com.ruslan.backendtrello.models.mongo.Board;
 import com.ruslan.backendtrello.models.mongo.Card;
 import com.ruslan.backendtrello.models.mongo.List;
+import com.ruslan.backendtrello.payload.request.card.ChangeCardUserRequest;
 import com.ruslan.backendtrello.payload.request.card.CreateCardRequest;
 import com.ruslan.backendtrello.payload.request.card.EditCardRequest;
 import com.ruslan.backendtrello.payload.request.card.GroupEditRequest;
@@ -25,11 +26,11 @@ public class CardService {
     @Value("${trello.card.defaultColor}")
     private String defaultColor;
     private final BoardRepository boardRepository;
+    private final SequenceGeneratorService sequenceGeneratorService;
 
     public CreatedResponse addCard(CreateCardRequest createCardRequest, Board board, Long userId) {
-        Long currentCardsNumber = board.getLists().stream().map(list -> (long) list.getCards().size()).reduce(0L, Long::sum);
         Card card = new Card(
-                currentCardsNumber,
+                sequenceGeneratorService.generateSequence(Card.SEQUENCE_NAME),
                 createCardRequest.getTitle(),
                 createCardRequest.getDescription(),
                 createCardRequest.getPosition(),
@@ -93,6 +94,7 @@ public class CardService {
                         .findFirst().ifPresent(l -> l.getCards().add(cardToUpdate.get())); // add to new
             }
         }
+        boardRepository.save(board);
         return new MessageResponse("Updated");
     }
 
@@ -100,6 +102,20 @@ public class CardService {
         board.getLists()
                 .forEach(list -> list.getCards()
                         .removeIf(card -> card.getId().equals(cardId)));
+        boardRepository.save(board);
         return new MessageResponse("Deleted");
+    }
+
+    public MessageResponse editCardUsers(Board board, Long cardId, ChangeCardUserRequest changeCardUserRequest) {
+        board.getLists().stream()
+                .map(List::getCards)
+                .flatMap(Collection::stream)
+                .filter(card -> card.getId().equals(cardId))
+                .forEach(card -> {
+                    card.getUserIds().addAll(changeCardUserRequest.getAdd());
+                    card.getUserIds().removeIf(id -> changeCardUserRequest.getRemove().contains(id));
+                });
+        boardRepository.save(board);
+        return new MessageResponse("Updated");
     }
 }

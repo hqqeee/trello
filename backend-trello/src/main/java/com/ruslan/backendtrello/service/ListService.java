@@ -18,7 +18,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ListService {
-    final BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
+    private final SequenceGeneratorService sequenceGeneratorService;
     public MessageResponse addList(CreateListRequest createListRequest, Board board){
         if (board.getLists() == null
                 || (board.getLists().size() > 0
@@ -26,7 +27,7 @@ public class ListService {
             board.setLists(new ArrayList<>());
         }
         List list = new List(
-                (long) board.getLists().size(),
+                sequenceGeneratorService.generateSequence(List.SEQUENCE_NAME),
                 createListRequest.position(),
                 createListRequest.title(),
                 Collections.emptyList());

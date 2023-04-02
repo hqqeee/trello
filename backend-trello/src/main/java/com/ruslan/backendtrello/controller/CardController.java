@@ -2,6 +2,7 @@ package com.ruslan.backendtrello.controller;
 
 import com.ruslan.backendtrello.models.mongo.Board;
 import com.ruslan.backendtrello.models.sql.User;
+import com.ruslan.backendtrello.payload.request.card.ChangeCardUserRequest;
 import com.ruslan.backendtrello.payload.request.card.CreateCardRequest;
 import com.ruslan.backendtrello.payload.request.card.EditCardRequest;
 import com.ruslan.backendtrello.payload.request.card.GroupEditRequest;
@@ -71,6 +72,19 @@ public class CardController {
         Optional<Board> board = boardService.getBoardById(boardId, user);
         if (user.isPresent() && board.isPresent()) {
             return ResponseEntity.ok(cardService.deleteCard(board.get(), cardId));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{boardId}/card/{cardId}/users")
+    ResponseEntity<MessageResponse> editsCardUsers(@PathVariable("boardId") Long boardId,
+                                                   @PathVariable("cardId") Long cardId,
+                                                   Authentication authentication,
+                                                   @RequestBody ChangeCardUserRequest changeCardUserRequest){
+        Optional<User> user = userService.getUserFromAuthentication(authentication);
+        Optional<Board> board = boardService.getBoardById(boardId, user);
+        if (user.isPresent() && board.isPresent()) {
+            return ResponseEntity.ok(cardService.editCardUsers(board.get(), cardId, changeCardUserRequest));
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
