@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CardService {
     @Value("${trello.card.defaultColor}")
-    private String defaultColor;
+    private static String defaultColor;
     private final BoardRepository boardRepository;
     public CreatedResponse addCard(CreateCardRequest createCardRequest, Board board, Long userId) {
         Long currentCardsNumber = board.getLists().stream().map(list -> (long) list.getCards().size()).reduce(0L, Long::sum);
