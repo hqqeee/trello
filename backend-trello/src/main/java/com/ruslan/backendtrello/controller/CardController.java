@@ -3,7 +3,9 @@ package com.ruslan.backendtrello.controller;
 import com.ruslan.backendtrello.models.mongo.Board;
 import com.ruslan.backendtrello.models.sql.User;
 import com.ruslan.backendtrello.payload.request.card.CreateCardRequest;
+import com.ruslan.backendtrello.payload.request.card.GroupEditRequest;
 import com.ruslan.backendtrello.payload.response.CreatedResponse;
+import com.ruslan.backendtrello.payload.response.MessageResponse;
 import com.ruslan.backendtrello.service.BoardService;
 import com.ruslan.backendtrello.service.CardService;
 import com.ruslan.backendtrello.service.UserService;
@@ -31,6 +33,18 @@ public class CardController {
         Optional<Board> board = boardService.getBoardById(boardId, user);
         if(user.isPresent() && board.isPresent()){
             return ResponseEntity.ok(cardService.addCard(createCardRequest, board.get(), user.get().getId()));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{boardId}/card")
+    ResponseEntity<MessageResponse> editGroupOfCards(@PathVariable("boardId") Long boardId,
+                                                     @RequestBody java.util.List<GroupEditRequest> cardsEdits,
+                                                     Authentication authentication){
+        Optional<User> user = userService.getUserFromAuthentication(authentication);
+        Optional<Board> board = boardService.getBoardById(boardId, user);
+        if(user.isPresent() && board.isPresent()){
+            return ResponseEntity.ok(cardService.editCards(cardsEdits, board.get()));
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

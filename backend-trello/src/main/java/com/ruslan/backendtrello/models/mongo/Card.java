@@ -21,6 +21,7 @@ public class Card {
     private Long id;
     private String title;
     private String description;
+    private Integer position;
     private String color; // TODO enum
     private Object custom;
     private List<Long> userIds;

@@ -37,7 +37,7 @@ public class ListController {
     }
 
     @PutMapping("/{boardId}/list")
-    ResponseEntity<MessageResponse> editListsOnBoard(Authentication authentication,
+    ResponseEntity<MessageResponse> editGroupOfLists(Authentication authentication,
                                              @RequestBody java.util.List<EditListsRequest> editListsRequest,
                                              @PathVariable("boardId") Long boardId){
         Optional<User> user = userService.getUserFromAuthentication(authentication);
