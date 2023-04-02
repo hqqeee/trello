@@ -3,6 +3,7 @@ package com.ruslan.backendtrello.controller;
 import com.ruslan.backendtrello.models.mongo.Board;
 import com.ruslan.backendtrello.models.sql.User;
 import com.ruslan.backendtrello.payload.request.card.CreateCardRequest;
+import com.ruslan.backendtrello.payload.request.card.EditCardRequest;
 import com.ruslan.backendtrello.payload.request.card.GroupEditRequest;
 import com.ruslan.backendtrello.payload.response.CreatedResponse;
 import com.ruslan.backendtrello.payload.response.MessageResponse;
@@ -28,10 +29,10 @@ public class CardController {
     @PostMapping("/{boardId}/card")
     ResponseEntity<CreatedResponse> createCard(@PathVariable("boardId") Long boardId,
                                                @RequestBody CreateCardRequest createCardRequest,
-                                               Authentication authentication){
+                                               Authentication authentication) {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         Optional<Board> board = boardService.getBoardById(boardId, user);
-        if(user.isPresent() && board.isPresent()){
+        if (user.isPresent() && board.isPresent()) {
             return ResponseEntity.ok(cardService.addCard(createCardRequest, board.get(), user.get().getId()));
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -40,12 +41,38 @@ public class CardController {
     @PutMapping("/{boardId}/card")
     ResponseEntity<MessageResponse> editGroupOfCards(@PathVariable("boardId") Long boardId,
                                                      @RequestBody java.util.List<GroupEditRequest> cardsEdits,
-                                                     Authentication authentication){
+                                                     Authentication authentication) {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         Optional<Board> board = boardService.getBoardById(boardId, user);
-        if(user.isPresent() && board.isPresent()){
+        if (user.isPresent() && board.isPresent()) {
             return ResponseEntity.ok(cardService.editCards(cardsEdits, board.get()));
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/{boardId}/card/{cardId}")
+    ResponseEntity<MessageResponse> editCard(@PathVariable("boardId") Long boardId,
+                                             @PathVariable("cardId") Long cardId,
+                                             @RequestBody EditCardRequest editCardRequest,
+                                             Authentication authentication) {
+        Optional<User> user = userService.getUserFromAuthentication(authentication);
+        Optional<Board> board = boardService.getBoardById(boardId, user);
+        if (user.isPresent() && board.isPresent()) {
+            return ResponseEntity.ok(cardService.editCard(editCardRequest, board.get(), cardId));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{boardId}/card/{cardId}")
+    ResponseEntity<MessageResponse> editCard(@PathVariable("boardId") Long boardId,
+                                             @PathVariable("cardId") Long cardId,
+                                             Authentication authentication){
+        Optional<User> user = userService.getUserFromAuthentication(authentication);
+        Optional<Board> board = boardService.getBoardById(boardId, user);
+        if (user.isPresent() && board.isPresent()) {
+            return ResponseEntity.ok(cardService.deleteCard(board.get(), cardId));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

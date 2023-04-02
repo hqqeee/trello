@@ -4,6 +4,7 @@ import com.ruslan.backendtrello.models.mongo.Board;
 import com.ruslan.backendtrello.models.mongo.Card;
 import com.ruslan.backendtrello.models.mongo.List;
 import com.ruslan.backendtrello.payload.request.card.CreateCardRequest;
+import com.ruslan.backendtrello.payload.request.card.EditCardRequest;
 import com.ruslan.backendtrello.payload.request.card.GroupEditRequest;
 import com.ruslan.backendtrello.payload.response.CreatedResponse;
 import com.ruslan.backendtrello.payload.response.MessageResponse;
@@ -69,8 +70,36 @@ public class CardService {
             }
         });
         board.setLists(new ArrayList<>(listsMap.values()));
-        System.out.println(board);
         boardRepository.save(board);
         return new MessageResponse("Updated");
+    }
+
+    public MessageResponse editCard(EditCardRequest editCardRequest, Board board, Long cardId) {
+        Optional<Card> cardToUpdate = board.getLists().stream()
+                .map(List::getCards)
+                .flatMap(Collection::stream)
+                .filter(card -> card.getId().equals(cardId))
+                .findFirst();
+        if(cardToUpdate.isPresent()){
+            if(editCardRequest.getDescription() != null){
+                cardToUpdate.get().setDescription(editCardRequest.getDescription() );
+            }
+            if(editCardRequest.getTitle() != null){
+                cardToUpdate.get().setTitle(editCardRequest.getTitle());
+            }
+            if(editCardRequest.getListId() != null) {
+               deleteCard(board, cardId); // delete from old list
+                board.getLists().stream().filter(list -> list.getId().equals(editCardRequest.getListId()))
+                        .findFirst().ifPresent(l -> l.getCards().add(cardToUpdate.get())); // add to new
+            }
+        }
+        return new MessageResponse("Updated");
+    }
+
+    public MessageResponse deleteCard(Board board, Long cardId) {
+        board.getLists()
+                .forEach(list -> list.getCards()
+                        .removeIf(card -> card.getId().equals(cardId)));
+        return new MessageResponse("Deleted");
     }
 }
