@@ -1,4 +1,4 @@
-package com.ruslan.backendtrello.payload.response.board;
+package com.ruslan.backendtrello.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class BoardCreatedResponse {
+public class CreatedResponse {
     private final String message;
     private Long id;
 }

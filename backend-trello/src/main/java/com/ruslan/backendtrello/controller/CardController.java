@@ -1,12 +1,37 @@
 package com.ruslan.backendtrello.controller;
 
+import com.ruslan.backendtrello.models.mongo.Board;
+import com.ruslan.backendtrello.models.sql.User;
+import com.ruslan.backendtrello.payload.request.card.CreateCardRequest;
+import com.ruslan.backendtrello.payload.response.CreatedResponse;
+import com.ruslan.backendtrello.service.BoardService;
+import com.ruslan.backendtrello.service.CardService;
+import com.ruslan.backendtrello.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
 public class CardController {
+    private final BoardService boardService;
+    private final UserService userService;
+    private final CardService cardService;
 
+    @PostMapping("/{boardId}/card")
+    ResponseEntity<CreatedResponse> createCard(@PathVariable("boardId") Long boardId,
+                                               @RequestBody CreateCardRequest createCardRequest,
+                                               Authentication authentication){
+        Optional<User> user = userService.getUserFromAuthentication(authentication);
+        Optional<Board> board = boardService.getBoardById(boardId, user);
+        if(user.isPresent() && board.isPresent()){
+            return ResponseEntity.ok(cardService.addCard(createCardRequest, board.get(), user.get().getId()));
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

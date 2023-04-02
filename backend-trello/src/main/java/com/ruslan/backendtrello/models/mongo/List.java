@@ -17,5 +17,6 @@ public class List {
     private Long id;
     private Integer position;
     private String title;
+    private java.util.List<Card> cards;
 }
 

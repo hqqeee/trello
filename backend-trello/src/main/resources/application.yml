@@ -25,3 +25,5 @@ trello:
     jwtSecret: RyI7V2Q^OuN7VahKf6gk7zUOauI+tkPn
     jwtExpirationMs: 600000
     jwtRefreshExpirationMs: 86400000
+  card:
+    defaultColor: #262626

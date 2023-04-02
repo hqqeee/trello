@@ -23,6 +23,6 @@ public class Card {
     private String description;
     private String color; // TODO enum
     private Object custom;
-    private List<Integer> userIds;
+    private List<Long> userIds;
     private LocalDateTime createdAt;
 }

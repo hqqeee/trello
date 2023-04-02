@@ -5,7 +5,7 @@ import com.ruslan.backendtrello.models.sql.User;
 import com.ruslan.backendtrello.payload.request.board.CreateBoardRequest;
 import com.ruslan.backendtrello.payload.request.board.PutBoardRequest;
 import com.ruslan.backendtrello.payload.response.MessageResponse;
-import com.ruslan.backendtrello.payload.response.board.BoardCreatedResponse;
+import com.ruslan.backendtrello.payload.response.CreatedResponse;
 import com.ruslan.backendtrello.payload.response.board.BoardDetailedResponse;
 import com.ruslan.backendtrello.payload.response.board.BoardShortResponse;
 import com.ruslan.backendtrello.service.BoardService;
@@ -39,7 +39,7 @@ public class BoardController {
                 return ResponseEntity.ok(boardService.getById(id));
             }
         }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
@@ -47,7 +47,7 @@ public class BoardController {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         return user
                 .map(value -> ResponseEntity.ok(boardService.getAllUsersBoards(value)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")
@@ -65,17 +65,17 @@ public class BoardController {
     }
 
     @PostMapping
-    ResponseEntity<BoardCreatedResponse> createBoard(
+    ResponseEntity<CreatedResponse> createBoard(
             @Valid @RequestBody CreateBoardRequest createBoardRequest,
             Authentication authentication){
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         if(user.isPresent()){
-            BoardCreatedResponse boardCreatedResponse =
+            CreatedResponse boardCreatedResponse =
                     boardService.addBoard(createBoardRequest, user.get().getId());
             return boardCreatedResponse.getId() == null?
                     ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(boardCreatedResponse) :
                     ResponseEntity.status(HttpStatus.CREATED).body(boardCreatedResponse);
         }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

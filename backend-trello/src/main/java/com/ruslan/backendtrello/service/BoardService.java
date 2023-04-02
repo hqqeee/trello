@@ -6,7 +6,7 @@ import com.ruslan.backendtrello.models.sql.User;
 import com.ruslan.backendtrello.payload.request.board.CreateBoardRequest;
 import com.ruslan.backendtrello.payload.request.board.PutBoardRequest;
 import com.ruslan.backendtrello.payload.response.MessageResponse;
-import com.ruslan.backendtrello.payload.response.board.BoardCreatedResponse;
+import com.ruslan.backendtrello.payload.response.CreatedResponse;
 import com.ruslan.backendtrello.payload.response.board.BoardDetailedResponse;
 import com.ruslan.backendtrello.payload.response.board.BoardShortResponse;
 import com.ruslan.backendtrello.repository.BoardRepository;
@@ -41,7 +41,7 @@ public class BoardService {
         return Optional.empty();
     }
 
-    public BoardCreatedResponse addBoard(CreateBoardRequest createBoardRequest, Long userId) {
+    public CreatedResponse addBoard(CreateBoardRequest createBoardRequest, Long userId) {
         try {
             Board board = boardRepository.save(
                     Board.builder()
@@ -50,10 +50,10 @@ public class BoardService {
                             .lists(Collections.emptyList())
                             .ownersId(Collections.singletonList(userId))
                             .build());
-            return new BoardCreatedResponse("Created", board.getId());
+            return new CreatedResponse("Created", board.getId());
         } catch (Exception e) {
             e.printStackTrace();
-            return new BoardCreatedResponse("Cannot create board. Error: " + e.getMessage());
+            return new CreatedResponse("Cannot create board. Error: " + e.getMessage());
         }
     }
 

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,7 +28,8 @@ public class ListService {
         List list = new List(
                 (long) board.getLists().size(),
                 createListRequest.position(),
-                createListRequest.title());
+                createListRequest.title(),
+                Collections.emptyList());
         board.getLists().add(list);
         System.out.println(createListRequest);
         boardRepository.save(board);

@@ -33,7 +33,7 @@ public class ListController {
        Optional<User> user = userService.getUserFromAuthentication(authentication);
        Optional<Board> board = boardService.getBoardById(boardId, user);
         return board.map(value -> ResponseEntity.ok(listService.addList(createListRequest, value)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{boardId}/list")
@@ -43,7 +43,7 @@ public class ListController {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         Optional<Board> board = boardService.getBoardById(boardId, user);
         return board.map(value -> ResponseEntity.ok(listService.editLists(editListsRequest, value)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{boardId}/list/{listId}")
@@ -54,7 +54,7 @@ public class ListController {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         Optional<Board> board = boardService.getBoardById(boardId, user);
         return board.map(value -> ResponseEntity.ok(listService.editList(editListRequest, value, listId)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{boardId}/list/{listId}")
@@ -64,6 +64,6 @@ public class ListController {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         Optional<Board> board = boardService.getBoardById(boardId, user);
         return board.map(value -> ResponseEntity.ok(listService.deleteList(value, listId)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.UNAUTHORIZED));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
