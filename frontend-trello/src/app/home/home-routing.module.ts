@@ -5,11 +5,12 @@ import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {
-    path: 'board',
+    path: 'board/:id',
     component: BoardComponent,
   },
   {
     path: '',
+    title: 'My Boards',
     component: HomeComponent,
   },
 ];
