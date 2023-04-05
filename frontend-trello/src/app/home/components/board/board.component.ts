@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { board } from '../../../data/Boards';
-import { List } from '../../../types/list';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Board } from '../../../types/board';
 
 @Component({
   selector: 'tr-board',
@@ -8,8 +8,18 @@ import { List } from '../../../types/list';
   styleUrls: ['./board.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BoardComponent {
-  title: string = board.title;
+export class BoardComponent implements OnInit {
+  board?: Board;
 
-  lists?: List[] = board.lists;
+  constructor(private readonly activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.initBoard();
+  }
+
+  private initBoard(): void {
+    this.activatedRoute.data.subscribe(({ board }) => {
+      this.board = board;
+    });
+  }
 }

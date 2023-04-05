@@ -10,10 +10,10 @@ import { board } from '../../../data/Boards';
 })
 export class HomeComponent {
   boards: Board[] = [
-    board,
     { id: 1, title: 'shopping' },
     { id: 2, title: 'wedding preparation' },
     { id: 3, title: 'development of an online store' },
     { id: 4, title: 'course on promotion in social networks' },
+    board,
   ];
 }
