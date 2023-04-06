@@ -112,8 +112,12 @@ public class CardService {
                 .flatMap(Collection::stream)
                 .filter(card -> card.getId().equals(cardId))
                 .forEach(card -> {
-                    card.getUserIds().addAll(changeCardUserRequest.getAdd());
-                    card.getUserIds().removeIf(id -> changeCardUserRequest.getRemove().contains(id));
+                    if(changeCardUserRequest.getAdd() != null){
+                        card.getUserIds().addAll(changeCardUserRequest.getAdd());
+                    }
+                    if(changeCardUserRequest.getRemove() != null){
+                        card.getUserIds().removeIf(id -> changeCardUserRequest.getRemove().contains(id));
+                    }
                 });
         boardRepository.save(board);
         return new MessageResponse("Updated");
