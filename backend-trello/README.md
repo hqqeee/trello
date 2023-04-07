@@ -24,13 +24,13 @@ This API call is used to obtain a new access token using a refresh token. The us
 ### Board Management APIs
 These APIs are used for managing boards in the application.
 
-| Route                | Method | Request Body                                       | Response Body                                                                      |
-|----------------------|--------|----------------------------------------------------|-----------------------------------------------------------------------------------|
-| `/api/board`         | GET    | -                                                  | `[{id: 4, title: "todo1s", custom: {color: "desc1"}}, {...}]`                      |
-| `/api/board/{boardId}` | GET    | -                                                  | `{"title": "todo1s", "custom": {"color": "desc1"}, "users": [{"id": 1, "email": "alasd@aadsd.ad"}], "lists": [{...}, {...}]}` |
-| `/api/board/{boardId}` | DELETE | -                                                  | `{"message": "Deleted"}`                                                          |
-| `/api/board/{boardId}` | PUT    | `{"id": 5, "title": "newTitle", "custom": {...}}`   | `{"message": "Updated"}`                                                          |
-| `/api/board`         | POST   | `{"title": "newTitle", "custom": {...}}`           | `{"message": "Created", "id": 11}`                                                |
+| Route                | Method | Request Body                                       | Response Body                                                                                                                |
+|----------------------|--------|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `/api/board`         | GET    | -                                                  | `{"boards":[{id: 4, title: "todo1s", custom: {color: "desc1"}}, {...}]}`                                                     |
+| `/api/board/{boardId}` | GET    | -                                                  | `{"title": "todo1s", "custom": {"color": "desc1"}, "lists": [{...}, {...}]}` |
+| `/api/board/{boardId}` | DELETE | -                                                  | `{"message": "Deleted"}`                                                                                                     |
+| `/api/board/{boardId}` | PUT    | `{"id": 5, "title": "newTitle", "custom": {...}}`   | `{"message": "Updated"}`                                                                                                     |
+| `/api/board`         | POST   | `{"title": "newTitle", "custom": {...}}`           | `{"message": "Created", "id": 11}`                                                                                           |
 
 ### Description
 

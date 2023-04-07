@@ -26,8 +26,13 @@ public class BoardService {
     public BoardDetailedResponse getById(Long id) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new BoardNotFoundException("Board with id " + id + " not found."));
-        java.util.List<User> owners = userRepository.findAllById(board.getOwnersId());
-        return convertBoardDetailed(board, owners);
+        return convertBoardDetailed(board);
+    }
+
+    public List<User> getOwnersBuId(Long id){
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new BoardNotFoundException("Board with id " + id + " not found."));
+        return userRepository.findAllById(board.getOwnersId());
     }
 
     public Optional<Board> getBoardById(Long id, Optional<User> user){
@@ -101,11 +106,10 @@ public class BoardService {
         return new MessageResponse("Cannot update board.");
     }
 
-    private BoardDetailedResponse convertBoardDetailed(Board board, java.util.List<User> owners) {
+    private BoardDetailedResponse convertBoardDetailed(Board board) {
         return new BoardDetailedResponse(
                 board.getTitle(),
                 board.getCustom(),
-                owners.stream().map(user -> new ShortUserInfo(user.getId(), user.getEmail())).toList(),
                 board.getLists()
         );
     }

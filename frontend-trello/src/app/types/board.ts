@@ -1,7 +1,8 @@
 import { List } from './list';
 
 export interface Board {
-  id: number;
+  id?: number;
   title: string;
+  custom: any;
   lists?: List[];
 }

@@ -10,6 +10,5 @@ import lombok.Data;
 public class BoardDetailedResponse {
     private String title;
     private Object custom;
-    private java.util.List<ShortUserInfo> users;
     private java.util.List<List> lists;
 }

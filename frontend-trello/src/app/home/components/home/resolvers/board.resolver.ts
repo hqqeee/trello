@@ -1,7 +1,9 @@
-import { RouterStateSnapshot, ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
 import { Board } from '../../../../types/board';
-import { board } from '../../../../data/Boards';
+import { inject } from '@angular/core';
+import { BoardsService } from '../../../services/boards.service';
 
-export const boardResolver: ResolveFn<Board> =
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => board;
+export const boardResolver: ResolveFn<Board> = (route: ActivatedRouteSnapshot) =>
+  inject(BoardsService).getBoardById(route.paramMap.get('id'));
+
+export const boardsResolver: ResolveFn<Board[]> = () => inject(BoardsService).getBoards();

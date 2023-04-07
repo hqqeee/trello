@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BoardComponent } from './components/board/board.component';
 import { HomeComponent } from './components/home/home.component';
-import { boardResolver } from './components/home/resolvers/board.resolver';
+import { boardResolver, boardsResolver } from './components/home/resolvers/board.resolver';
 
 const routes: Routes = [
   {
@@ -14,6 +14,7 @@ const routes: Routes = [
     path: '',
     title: 'My Boards',
     component: HomeComponent,
+    resolve: { boards: boardsResolver },
   },
 ];
 

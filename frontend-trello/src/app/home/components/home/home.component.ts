@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Board } from '../../../types/board';
-import { board } from '../../../data/Boards';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'tr-home',
@@ -8,12 +8,18 @@ import { board } from '../../../data/Boards';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
-  boards: Board[] = [
-    { id: 1, title: 'shopping' },
-    { id: 2, title: 'wedding preparation' },
-    { id: 3, title: 'development of an online store' },
-    { id: 4, title: 'course on promotion in social networks' },
-    board,
-  ];
+export class HomeComponent implements OnInit {
+  boards: Board[] = [];
+
+  constructor(private readonly activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.initBoards();
+  }
+
+  private initBoards(): void {
+    this.activatedRoute.data.subscribe(({ boards }) => {
+      this.boards = boards;
+    });
+  }
 }

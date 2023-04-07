@@ -11,6 +11,7 @@ import com.ruslan.backendtrello.payload.response.CreatedResponse;
 import com.ruslan.backendtrello.payload.response.UserResponse;
 import com.ruslan.backendtrello.payload.response.board.BoardDetailedResponse;
 import com.ruslan.backendtrello.payload.response.board.BoardShortResponse;
+import com.ruslan.backendtrello.payload.response.board.BoardsResponse;
 import com.ruslan.backendtrello.service.BoardService;
 import com.ruslan.backendtrello.service.UserService;
 import jakarta.validation.Valid;
@@ -39,9 +40,8 @@ public class BoardController {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         if (user.isPresent()) {
             BoardDetailedResponse boardDetailed = boardService.getById(id);
-            if (boardDetailed.getUsers()
-                    .stream().map(ShortUserInfo::id)
-                    .anyMatch(userId -> Objects.equals(userId, user.get().getId()))) {
+            if (boardService.getOwnersBuId(id).stream()
+                    .anyMatch(owner -> Objects.equals(owner.getId(), user.get().getId()))) {
                 return ResponseEntity.ok(boardService.getById(id));
             }
         }
@@ -49,10 +49,10 @@ public class BoardController {
     }
 
     @GetMapping
-    ResponseEntity<java.util.List<BoardShortResponse>> getAllUsersBoards(Authentication authentication) {
+    ResponseEntity<BoardsResponse> getAllUsersBoards(Authentication authentication) {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         return user
-                .map(value -> ResponseEntity.ok(boardService.getAllUsersBoards(value)))
+                .map(value -> ResponseEntity.ok(new BoardsResponse(boardService.getAllUsersBoards(value))))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -93,11 +93,9 @@ public class BoardController {
         Optional<User> user = userService.getUserFromAuthentication(authentication);
         Optional<Board> board = boardService.getBoardById(boardId, user);
         if (board.isPresent()) {
-            System.out.println(board.get().getOwnersId());
             if (board.get().getLists().stream().map(List::getCards)
                     .flatMap(Collection::stream)
                     .anyMatch(card -> card.getUserIds().contains(userId))) {
-                System.out.println("2");
                 return ResponseEntity.ok(new UserResponse(userId, userService.getUserById(userId).getEmail()));
             }
         }
