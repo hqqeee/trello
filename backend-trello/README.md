@@ -21,6 +21,7 @@ This API call is used to sign in an existing user. The user must provide their e
 #### /api/auth/refresh
 This API call is used to obtain a new access token using a refresh token. The user must provide a valid refresh token in the request body. If successful, the response will contain a new access token and a new refresh token.
 
+
 ### Board Management APIs
 These APIs are used for managing boards in the application.
 
@@ -31,6 +32,7 @@ These APIs are used for managing boards in the application.
 | `/api/board/{boardId}` | DELETE | -                                                  | `{"message": "Deleted"}`                                                                                                     |
 | `/api/board/{boardId}` | PUT    | `{"id": 5, "title": "newTitle", "custom": {...}}`   | `{"message": "Updated"}`                                                                                                     |
 | `/api/board`         | POST   | `{"title": "newTitle", "custom": {...}}`           | `{"message": "Created", "id": 11}`                                                                                           |
+| `/api/board//{boardId}/user/{userId}` | GET | - | `{"id": 3,"email": "email@email.com"}`|
 
 ### Description
 
@@ -48,6 +50,7 @@ This API call updates a specific board by its ID. The request body should contai
 
 #### POST /api/board
 This API call creates a new board. The request body should contain the title and custom fields for the new board. The response body contains
+
 
 ### List Management APIs
 These APIs are used for managing lists on boards.
@@ -72,3 +75,32 @@ This API call updates a specific list within a board by its ID. The request body
 
 #### DELETE /api/board/{boardId}/list/{listId}
 This API call deletes a specific list within a board by its ID. The response body contains a message indicating that the list was successfully deleted.
+
+
+### Card Management APIs
+These APIs are used for managing cards on boards.
+
+| Route                                   | Method | Request Body                                                                                                   | Response Body                         |
+|-----------------------------------------|--------|----------------------------------------------------------------------------------------------------------------|---------------------------------------|
+| `/api/board/{boardId}/card`             | POST   | `{"title": "Title","list_id": 1,"position": 1,"desription": "desription","custom": {"customField": "h"} }`     | `{"message": "Created","id": 1 }`      |
+| `/api/board/{boardId}/card`             | PUT    | `[{"id": 1,"position": 1,"list_id": 2 }, {"id": 2,"position": 1,"list_id": 1 }]`                                | `{"message": "Updated"}`              |
+| `/api/board/{boardId}/card/{cardId}`    | PUT    | `{"title": "title","description": "description","list_id": 1 }`                                               | `{"message": "Updated"}`              |
+| `/api/board/{boardId}/card/{cardId}`    | DELETE | -                                                                                                              | `{"message": "Deleted"}`              |
+| `/api/board/{boardId}/card/{cardId}/users` | PUT | `{"add": [1,2,3],"remove": [4,5,6]}`                                             | `{"message": "Updated"}`              |
+
+### Description
+
+#### POST /api/board/{boardId}/card
+This API call creates a new card within a board. The request body should contain the title, list ID, position, description, and custom fields of the new card. The response body contains a message indicating that the card was successfully created along with its ID.
+
+#### PUT /api/board/{boardId}/card
+This API call updates the positions and list IDs of all cards within a board. The request body should contain an array of objects, each containing the ID, position, and new list ID of a card. The response body contains a message indicating that the cards were successfully updated.
+
+#### PUT /api/board/{boardId}/card/{cardId}
+This API call updates a specific card within a board by its ID. The request body should contain the updated title, description, and list ID of the card. The response body contains a message indicating that the card was successfully updated.
+
+#### DELETE /api/board/{boardId}/card/{cardId}
+This API call deletes a specific card within a board by its ID. The response body contains a message indicating that the card was successfully deleted.
+
+#### PUT /api/board/{boardId}/card/{cardId}/users
+This API call adds or removes users to/from a specific card within a board by its ID. The request body should contain an object with "add" and/or "remove" arrays of user IDs. The response body contains a message indicating that the users were successfully added or removed from the card.
