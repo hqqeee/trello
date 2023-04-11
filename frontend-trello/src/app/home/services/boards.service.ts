@@ -12,6 +12,8 @@ export class BoardsService {
 
   boardUrl = this.apiUrl + 'board';
 
+  authToken = environment.authToken;
+
   private httpClient: HttpClient;
 
   constructor(httpClient: HttpClient) {
@@ -22,8 +24,7 @@ export class BoardsService {
     return this.httpClient
       .get<{ boards: Board[] }>(this.boardUrl, {
         headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGFzMjFkQGFhZHNkLmFkIiwiaWF0IjoxNjgwODY3NDc1LCJleHAiOjE2ODA4NjgwNzV9.mz22Ir1t9zqayFdyRJKHJKNHJdv-qmSMdeFmRsyOU2kg-s47zCJnxfFUa9XHJyY0rvcPyCOgRo5aiJ4n0qhmJw',
+          Authorization: this.authToken,
         },
       })
       .pipe(map((response) => response.boards));
@@ -34,8 +35,7 @@ export class BoardsService {
     return this.httpClient
       .get<Board>(`${this.boardUrl}/${id}`, {
         headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGFzMjFkQGFhZHNkLmFkIiwiaWF0IjoxNjgwODY3NDc1LCJleHAiOjE2ODA4NjgwNzV9.mz22Ir1t9zqayFdyRJKHJKNHJdv-qmSMdeFmRsyOU2kg-s47zCJnxfFUa9XHJyY0rvcPyCOgRo5aiJ4n0qhmJw',
+          Authorization: this.authToken,
         },
       })
       .pipe(map((response) => response));

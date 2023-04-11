@@ -6,7 +6,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
         format_sql: true
@@ -25,5 +25,5 @@ trello:
     defaultColor: '#262626'
   app:
     jwtSecret: RyI7V2Q^OuN7VahKf6gk7zUOauI+tkPn
-    jwtExpirationMs: 600000
+    jwtExpirationMs: 600000000
     jwtRefreshExpirationMs: 86400000
