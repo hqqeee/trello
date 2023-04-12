@@ -2,5 +2,5 @@
   <div class="board" *ngFor="let board of boards" [routerLink]="['/board', board.id]">
     <h3>{{board.title}}</h3>
   </div>
-  <button mat-button (click)="openDialog()" #addBoardBtn>Add board</button>
+  <button mat-button (click)="openDialog(addBoardBtn)" #addBoardBtn>Add board</button>
 </div>

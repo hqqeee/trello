@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Board } from '../../../types/board';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddNewBoardDialogComponent } from './add-new-board-dialog/add-new-board-dialog.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'tr-home',
@@ -12,8 +13,6 @@ import { AddNewBoardDialogComponent } from './add-new-board-dialog/add-new-board
 })
 export class HomeComponent implements OnInit {
   boards: Board[] = [];
-
-  @ViewChild('addBoardBtn') addBtn!: ElementRef<HTMLButtonElement>;
 
   constructor(private readonly activatedRoute: ActivatedRoute, private dialog: MatDialog) {}
 
@@ -27,13 +26,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openDialog() {
+  openDialog(addBoardBtn: MatButton) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.position = {
-      right: this.addBtn.nativeElement.offsetLeft + this.addBtn.nativeElement.offsetWidth + 'px',
-      top: this.addBtn.nativeElement.offsetTop + 'px',
+      left:
+        addBoardBtn._elementRef.nativeElement.offsetLeft +
+        addBoardBtn._elementRef.nativeElement.offsetWidth +
+        5 +
+        'px',
+      top: addBoardBtn._elementRef.nativeElement.offsetTop + 'px',
     };
     this.dialog.open(AddNewBoardDialogComponent, dialogConfig);
   }
