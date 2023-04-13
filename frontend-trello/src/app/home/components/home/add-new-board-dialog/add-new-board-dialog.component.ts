@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { BoardsService } from '../../../services/boards.service';
+import { Board } from '../../../../types/board';
 
 @Component({
   selector: 'tr-add-new-board-dialog',
@@ -16,16 +18,25 @@ export class AddNewBoardDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddNewBoardDialogComponent>,
+    private boardService: BoardsService,
   ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
-      boardTitle: [this.boardTitle, []],
+      boardTitle: [
+        this.boardTitle,
+        [Validators.required, Validators.pattern(/^[a-zA-Zа-яА-Я0-9\s\-._]*$/)],
+      ],
     });
   }
 
   save() {
-    console.log(this.form?.value);
+    const board: Board = {
+      title: this.form.value.boardTitle ?? '',
+      custom: '',
+    };
+    this.boardService.createBoard(board);
+    this.dialogRef.close(board);
   }
 
   close() {

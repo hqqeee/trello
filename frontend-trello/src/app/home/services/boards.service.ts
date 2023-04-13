@@ -40,4 +40,14 @@ export class BoardsService {
       })
       .pipe(map((response) => response));
   }
+
+  createBoard(board: Board) {
+    this.httpClient
+      .post<Board>(this.boardUrl, board, {
+        headers: {
+          Authorization: this.authToken,
+        },
+      })
+      .subscribe();
+  }
 }

@@ -7,11 +7,17 @@
       matInput
       placeholder="Board Title"
       formControlName="boardTitle">
+    <mat-error *ngIf="form.get('boardTitle')?.hasError('required')">
+      Title is <strong>required</strong>.
+    </mat-error>
+    <mat-error *ngIf="form.get('boardTitle')?.hasError('pattern')">
+      Title must contain only a-Z, а-Я, 0-9, -, ,.
+    </mat-error>
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <button (click)="close()" mat-raised-button>Close</button>
-  <button (click)="save()" mat-raised-button color="primary">Save</button>
+  <button (click)="save()" mat-raised-button color="primary" [disabled]="!form.valid">Save</button>
 </mat-dialog-actions>
 

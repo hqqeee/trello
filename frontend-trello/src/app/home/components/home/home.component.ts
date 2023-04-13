@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Board } from '../../../types/board';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AddNewBoardDialogComponent } from './add-new-board-dialog/add-new-board-dialog.component';
 import { MatButton } from '@angular/material/button';
 
@@ -14,7 +14,13 @@ import { MatButton } from '@angular/material/button';
 export class HomeComponent implements OnInit {
   boards: Board[] = [];
 
-  constructor(private readonly activatedRoute: ActivatedRoute, private dialog: MatDialog) {}
+  dialogRef: MatDialogRef<AddNewBoardDialogComponent> | undefined;
+
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.initBoards();
@@ -23,6 +29,7 @@ export class HomeComponent implements OnInit {
   private initBoards(): void {
     this.activatedRoute.data.subscribe(({ boards }) => {
       this.boards = boards;
+      this.cdr.markForCheck();
     });
   }
 
@@ -37,6 +44,13 @@ export class HomeComponent implements OnInit {
         'px',
       top: addBoardBtn._elementRef.nativeElement.offsetTop + 'px',
     };
-    this.dialog.open(AddNewBoardDialogComponent, dialogConfig);
+    this.dialogRef = this.dialog.open(AddNewBoardDialogComponent, dialogConfig);
+    this.dialogRef.afterClosed().subscribe((newBoard: Board) => {
+      if (newBoard) {
+        this.boards.push(newBoard);
+        this.cdr.detectChanges();
+        this.initBoards();
+      }
+    });
   }
 }

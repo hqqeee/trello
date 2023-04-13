@@ -4,10 +4,12 @@ $main-3: #393053;
 $main-4: #18122B;
 
 .board-container {
+  padding-inline: 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
   .board{
+    margin: 10px;
     background-color: $main-3;
     color: #fff;
     border-radius: 5px;
