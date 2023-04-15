@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AddNewBoardDialogComponent } from './add-new-board-dialog/add-new-board-dialog.component';
 import { MatButton } from '@angular/material/button';
+import { BoardsService } from '../../services/boards.service';
 
 @Component({
   selector: 'tr-home',
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
+    private boardService: BoardsService,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -29,7 +31,6 @@ export class HomeComponent implements OnInit {
   private initBoards(): void {
     this.activatedRoute.data.subscribe(({ boards }) => {
       this.boards = boards;
-      this.cdr.markForCheck();
     });
   }
 
@@ -47,9 +48,10 @@ export class HomeComponent implements OnInit {
     this.dialogRef = this.dialog.open(AddNewBoardDialogComponent, dialogConfig);
     this.dialogRef.afterClosed().subscribe((newBoard: Board) => {
       if (newBoard) {
-        this.boards.push(newBoard);
-        this.cdr.detectChanges();
-        this.initBoards();
+        this.boardService.getBoards().subscribe((boards) => {
+          this.boards = boards;
+          this.cdr.markForCheck();
+        });
       }
     });
   }
