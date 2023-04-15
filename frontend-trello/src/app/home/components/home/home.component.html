@@ -1,6 +1,6 @@
 <div class="board-container">
-  <div class="board" *ngFor="let board of boards" [routerLink]="['/board', board.id]">
-    <h3>{{board.title}}</h3>
-  </div>
-  <button mat-button (click)="openDialog(addBoardBtn)" #addBoardBtn>Add board</button>
+  <button mat-flat-button class="board" *ngFor="let board of boards" [routerLink]="['/board', board.id]">
+    {{board.title}}
+  </button>
+  <button mat-raised-button color="primary" (click)="openDialog(addBoardBtn)" #addBoardBtn>Add board</button>
 </div>

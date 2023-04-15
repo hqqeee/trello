@@ -11,6 +11,7 @@ import { AddNewBoardDialogComponent } from './components/home/add-new-board-dial
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatCardModule,
   ],
 })
 export class HomeModule {}

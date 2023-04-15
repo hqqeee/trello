@@ -9,38 +9,19 @@ $main-4: #18122B;
   flex-wrap: wrap;
   justify-content: left;
   .board{
-    margin: 10px;
-    background-color: $main-3;
+    margin-top: 10px;
     color: #fff;
     border-radius: 5px;
     padding: 16px;
     margin-inline: 10px;
-    transition: transform 0.2s ease-in-out;
-    cursor: pointer;
-  }
-  .board:hover{
-    background-color: $main-2;
   }
   button {
+    border-radius: 5px;
+    margin-top: 10px;
     height: 100px;
-    width: 100px;
     display: inline-block;
-    padding: 10px;
-    background-color: $main-1;
     color: white;
     font-size: 24px;
     font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    transition: all 0.3s ease-in-out;
-  }
-  button:hover {
-    background-color: $main-2;
-    cursor: pointer;
-  }
-  button:active {
-    background-color: $main-3;
-    box-shadow: none;
-    transform: translateY(5px);
   }
 }
