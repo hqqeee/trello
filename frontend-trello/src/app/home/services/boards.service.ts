@@ -50,4 +50,17 @@ export class BoardsService {
       })
       .subscribe();
   }
+
+  changeBoard(board: Board, id: string | null) {
+    if (id === null) return new Observable<Board>();
+    return this.httpClient
+      .put<Board>(`${this.boardUrl}/${id}`, board, {
+        headers: {
+          Authorization: this.authToken,
+        },
+      })
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
 }

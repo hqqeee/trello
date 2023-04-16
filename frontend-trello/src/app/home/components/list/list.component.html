@@ -1,8 +1,14 @@
-<div class="list-container">
-  {{title}}
-  {{cards.length}}
-  <p *ngFor="let card of cards">
-    <tr-card [title]="card.title"></tr-card>
-  </p>
-  <button>Add card</button>
-</div>
+<mat-list class="list-container">
+  <h3>{{title}}</h3>
+    <p *ngFor="let card of cards">
+      <mat-list-item>
+      <mat-card>
+        <mat-card-header>
+          <tr-card [title]="card.title"></tr-card>
+        </mat-card-header>
+      </mat-card>
+      </mat-list-item>
+    </p>
+
+  <button mat-button>Add card</button>
+</mat-list>

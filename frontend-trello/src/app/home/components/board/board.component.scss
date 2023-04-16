@@ -10,10 +10,20 @@ $main-4: #18122B;
   background: $backgroud-1;
   background: linear-gradient(317deg, $backgroud-1 0%, $backgroud-2 100%);
   padding: 5px 20px 20px;
-  h3{
+  .board-title {
+    height: 78px;
+    line-height: 78px;
+    margin: 0;
     font-family: $font-stack;
     font-size: 36px;
     font-weight: bold;
+    color: $main-font-color;
+    vertical-align: middle;
+  }
+  .edit-board{
+    display: flex;
+  }
+  .edit-button{
     color: $main-font-color;
   }
   .list-container{
@@ -48,26 +58,12 @@ $main-4: #18122B;
     background: $main-1;
   }
   /* Style the button */
-  button {
-    height: 100px;
-    width: 100px;
+  .add-button {
     display: inline-block;
-    padding: 10px;
-    background-color: $main-1;
     color: white;
     font-size: 24px;
     font-weight: bold;
     border-radius: 5px;
     border: none;
-    transition: all 0.3s ease-in-out;
-  }
-  button:hover {
-    background-color: $main-2;
-    cursor: pointer;
-  }
-  button:active {
-    background-color: $main-3;
-    box-shadow: none;
-    transform: translateY(5px);
   }
 }

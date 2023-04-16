@@ -9,9 +9,10 @@ import { CardComponent } from './components/card/card.component';
 import { HomeComponent } from './components/home/home.component';
 import { AddNewBoardDialogComponent } from './components/home/add-new-board-dialog/add-new-board-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,8 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
+    MatListModule,
+    FormsModule,
   ],
 })
 export class HomeModule {}
