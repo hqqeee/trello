@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { AddListDialogComponent } from './components/board/add-list-dialog/add-list-dialog/add-list-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
     CardComponent,
     HomeComponent,
     AddNewBoardDialogComponent,
+    AddListDialogComponent,
   ],
   imports: [
     CommonModule,

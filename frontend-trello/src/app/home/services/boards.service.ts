@@ -14,11 +14,7 @@ export class BoardsService {
 
   authToken = environment.authToken;
 
-  private httpClient: HttpClient;
-
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
-  }
+  constructor(private httpClient: HttpClient) {}
 
   getBoards(): Observable<Board[]> {
     return this.httpClient

@@ -37,7 +37,19 @@ $main-4: #18122B;
         width: 200px;
         margin-right: 20px;
       }
+      /* Style the button */
+      .add-button {
+        flex: 0 0 auto;
+        width: 260px;
+        display: inline-block;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 5px;
+        border: none;
+      }
     }
+
   }
 
   ::-webkit-scrollbar {
@@ -56,14 +68,5 @@ $main-4: #18122B;
 
   ::-webkit-scrollbar-thumb:hover {
     background: $main-1;
-  }
-  /* Style the button */
-  .add-button {
-    display: inline-block;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
   }
 }

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Create list</h2>
+
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input
+      matInput
+      placeholder="List Title"
+      formControlName="listTitle">
+    <mat-error *ngIf="form.get('boardTitle')?.hasError('required')">
+      Title is <strong>required</strong>.
+    </mat-error>
+    <mat-error *ngIf="form.get('boardTitle')?.hasError('pattern')">
+      Title must contain only a-Z, а-Я, 0-9, -, ,.
+    </mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button (click)="close()" mat-raised-button>Close</button>
+  <button (click)="save()" mat-raised-button color="primary" [disabled]="!form.valid">Save</button>
+</mat-dialog-actions>

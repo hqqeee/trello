@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board } from '../../../types/board';
 import { BoardsService } from '../../services/boards.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { AddListDialogComponent } from './add-list-dialog/add-list-dialog/add-list-dialog.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'tr-board',
@@ -17,10 +20,14 @@ export class BoardComponent implements OnInit {
 
   changeTitleForm: FormGroup;
 
+  addListDialogRef: MatDialogRef<AddListDialogComponent> | undefined;
+
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private boardService: BoardsService,
     private formBuilder: FormBuilder,
+    private matDialog: MatDialog,
+    private cdr: ChangeDetectorRef,
   ) {
     this.changeTitleForm = this.formBuilder.group({
       boardTitle: ['', [Validators.required, Validators.pattern(/^[a-zA-Zа-яА-Я0-9\s\-._]*$/)]],
@@ -57,5 +64,31 @@ export class BoardComponent implements OnInit {
       }
     });
     this.editing = false;
+  }
+
+  openDialog(addListBtn: MatButton) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    console.log(addListBtn._elementRef.nativeElement.offsetLeft + 'px');
+    dialogConfig.position = {
+      left:
+        addListBtn._elementRef.nativeElement.offsetLeft < window.innerWidth
+          ? addListBtn._elementRef.nativeElement.offsetLeft
+          : window.innerWidth - addListBtn._elementRef.nativeElement.offsetWidth - 40 + 'px', // TODO fix
+      top:
+        addListBtn._elementRef.nativeElement.offsetTop +
+        addListBtn._elementRef.nativeElement.offsetHeight +
+        5 +
+        'px',
+    };
+    const boardId = this.activatedRoute.snapshot.paramMap.get('id');
+    dialogConfig.data = { boardId: boardId };
+    this.addListDialogRef = this.matDialog.open(AddListDialogComponent, dialogConfig);
+    this.addListDialogRef.afterClosed().subscribe(() => {
+      this.boardService.getBoardById(boardId).subscribe((board) => {
+        this.board = board;
+        this.cdr.markForCheck();
+      });
+    });
   }
 }
