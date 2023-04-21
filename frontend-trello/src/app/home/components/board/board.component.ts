@@ -16,6 +16,8 @@ import { MatButton } from '@angular/material/button';
 export class BoardComponent implements OnInit {
   board?: Board;
 
+  boardId: string | null = '';
+
   editing = false;
 
   changeTitleForm: FormGroup;
@@ -37,6 +39,9 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.initBoard();
     this.changeTitleForm.get('boardTitle')?.setValue(this.board?.title);
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.boardId = params.get('id');
+    });
   }
 
   private initBoard(): void {
@@ -53,39 +58,34 @@ export class BoardComponent implements OnInit {
   }
 
   changeTitle(boardTitle: string): void {
-    this.activatedRoute.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if (this.board != undefined && boardTitle != undefined && id != undefined) {
-        this.board.title = boardTitle;
-        this.boardService.changeBoard(this.board, id);
-        this.boardService.getBoardById(id).subscribe((board) => {
-          this.board = board;
-        });
-      }
-    });
+    if (this.board != undefined && boardTitle != undefined && this.boardId != undefined) {
+      this.board.title = boardTitle;
+      this.boardService.changeBoard(this.board, this.boardId);
+      this.boardService.getBoardById(this.boardId).subscribe((board) => {
+        this.board = board;
+      });
+    }
     this.editing = false;
   }
 
   openDialog(addListBtn: MatButton) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    console.log(addListBtn._elementRef.nativeElement.offsetLeft + 'px');
     dialogConfig.position = {
       left:
         addListBtn._elementRef.nativeElement.offsetLeft < window.innerWidth
           ? addListBtn._elementRef.nativeElement.offsetLeft
-          : window.innerWidth - addListBtn._elementRef.nativeElement.offsetWidth - 40 + 'px', // TODO fix
+          : window.innerWidth - addListBtn._elementRef.nativeElement.offsetWidth - 35 + 'px', // TODO fix
       top:
         addListBtn._elementRef.nativeElement.offsetTop +
         addListBtn._elementRef.nativeElement.offsetHeight +
         5 +
         'px',
     };
-    const boardId = this.activatedRoute.snapshot.paramMap.get('id');
-    dialogConfig.data = { boardId: boardId };
+    dialogConfig.data = { boardId: this.boardId };
     this.addListDialogRef = this.matDialog.open(AddListDialogComponent, dialogConfig);
     this.addListDialogRef.afterClosed().subscribe(() => {
-      this.boardService.getBoardById(boardId).subscribe((board) => {
+      this.boardService.getBoardById(this.boardId).subscribe((board) => {
         this.board = board;
         this.cdr.markForCheck();
       });

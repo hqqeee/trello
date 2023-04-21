@@ -1,5 +1,18 @@
 <mat-list class="list-container">
-  <h3>{{title}}</h3>
+  <h3 class="list-title" *ngIf="!editing" (click)="editing = true">{{title}}</h3>
+  <form *ngIf="editing" class="edit-list" [formGroup]="changeListTitleForm" (ngSubmit)="submitChangeTitleForm()">
+    <mat-form-field>
+      <input
+        matInput
+        value="{{title}}"
+        formControlName="listTitle"
+        (focusout)="changeListTitleForm.valid && submitChangeTitleForm()"
+        (keydown.enter)="changeListTitleForm.valid && submitChangeTitleForm()">
+      <mat-error *ngIf="changeListTitleForm.get('boardTitle')?.hasError('required')">This field is required.</mat-error>
+      <mat-error *ngIf="changeListTitleForm.get('boardTitle')?.hasError('pattern')">Please enter a valid input.</mat-error>
+    </mat-form-field>
+    <button mat-icon-button class="edit-button" (click)="editing=false"><i class="material-icons">close</i></button>
+  </form>
     <p *ngFor="let card of cards">
       <mat-list-item>
       <mat-card>

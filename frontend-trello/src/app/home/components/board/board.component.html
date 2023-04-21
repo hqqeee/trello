@@ -15,7 +15,8 @@
   </form>
   <div class="list-container">
     <div class="list-wrapper">
-      <tr-list class="list" *ngFor="let list of board?.lists" [title]="list.title" [cards]="list.cards"></tr-list>
+      <tr-list class="list" *ngFor="let list of board?.lists"
+               [id]="list.id" [title]="list.title" [cards]="list.cards" [boardId]="boardId"></tr-list>
       <button class="add-button" mat-raised-button (click)="openDialog(addListBtn)"  #addListBtn>Add list</button>
     </div>
   </div>

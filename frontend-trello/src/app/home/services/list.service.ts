@@ -27,7 +27,33 @@ export class ListService {
       });
   }
 
+  editListTitle(newTitle: string, listId: number | undefined, boardId: string | null) {
+    this.httpClient
+      .put(
+        this.getListURL(
+          boardId ? boardId.toString() : '',
+          listId ? listId.toString().toString() : '',
+        ),
+        {
+          title: newTitle,
+          position: 1, // TODO
+        },
+        {
+          headers: {
+            Authorization: this.authToken,
+          },
+        },
+      )
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
   private getURL(boardId: string): string {
     return `${this.boardUrl}/${boardId}/list`;
+  }
+
+  private getListURL(boardId: string, listId: string) {
+    return this.getURL(boardId) + `/${listId}`;
   }
 }
