@@ -37,14 +37,20 @@ export class HomeComponent implements OnInit {
   openDialog(addBoardBtn: MatButton) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
-    dialogConfig.position = {
-      left:
-        addBoardBtn._elementRef.nativeElement.offsetLeft +
-        addBoardBtn._elementRef.nativeElement.offsetWidth +
-        5 +
-        'px',
-      top: addBoardBtn._elementRef.nativeElement.offsetTop + 'px',
-    };
+    const dialogWidth = 260;
+    const dialogHeight = 225;
+    dialogConfig.width = `${dialogWidth}px`;
+    dialogConfig.height = `${dialogHeight}px`;
+    const buttonRect = addBoardBtn._elementRef.nativeElement.getBoundingClientRect();
+    let leftPosition: number = buttonRect.right + 5;
+    let topPosition: number = buttonRect.top;
+    if (leftPosition + dialogWidth > window.innerWidth) {
+      leftPosition = buttonRect.left - 5 - dialogWidth;
+    }
+    if (topPosition + dialogHeight > window.innerHeight) {
+      topPosition = buttonRect.top - dialogHeight + buttonRect.height;
+    }
+    dialogConfig.position = { left: `${leftPosition}px`, top: `${topPosition}px` };
     this.dialogRef = this.dialog.open(AddNewBoardDialogComponent, dialogConfig);
     this.dialogRef.afterClosed().subscribe((newBoard: Board) => {
       if (newBoard) {
