@@ -40,7 +40,6 @@ export class AddListDialogComponent implements OnInit {
       title: this.form.value.listTitle ?? '',
       cards: [],
     };
-    this.listService.createList(list, this.data.boardId);
-    this.dialogRef.close();
+    this.listService.createList(list, this.data.boardId).subscribe(() => this.dialogRef.close());
   }
 }

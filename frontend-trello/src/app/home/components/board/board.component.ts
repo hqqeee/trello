@@ -59,11 +59,9 @@ export class BoardComponent implements OnInit {
 
   changeTitle(boardTitle: string): void {
     if (this.board != undefined && boardTitle != undefined && this.boardId != undefined) {
-      this.board.title = boardTitle;
-      this.boardService.changeBoard(this.board, this.boardId);
-      this.boardService.getBoardById(this.boardId).subscribe((board) => {
-        this.board = board;
-      });
+      this.boardService
+        .changeBoard({ ...this.board, title: boardTitle }, this.boardId)
+        .subscribe(() => this.reloadBoard());
     }
     this.editing = false;
   }
@@ -85,10 +83,14 @@ export class BoardComponent implements OnInit {
     dialogConfig.data = { boardId: this.boardId };
     this.addListDialogRef = this.matDialog.open(AddListDialogComponent, dialogConfig);
     this.addListDialogRef.afterClosed().subscribe(() => {
-      this.boardService.getBoardById(this.boardId).subscribe((board) => {
-        this.board = board;
-        this.cdr.markForCheck();
-      });
+      this.reloadBoard();
+    });
+  }
+
+  reloadBoard() {
+    this.boardService.getBoardById(this.boardId).subscribe((board) => {
+      this.board = board;
+      this.cdr.markForCheck();
     });
   }
 }

@@ -16,37 +16,29 @@ export class ListService {
   constructor(private httpClient: HttpClient) {}
 
   createList(list: List, boardId: string) {
-    this.httpClient
-      .post<List>(this.getURL(boardId), list, {
-        headers: {
-          Authorization: this.authToken,
-        },
-      })
-      .subscribe((response) => {
-        console.log(response);
-      });
+    return this.httpClient.post<List>(this.getURL(boardId), list, {
+      headers: {
+        Authorization: this.authToken,
+      },
+    });
   }
 
   editListTitle(newTitle: string, listId: number | undefined, boardId: string | null) {
-    this.httpClient
-      .put(
-        this.getListURL(
-          boardId ? boardId.toString() : '',
-          listId ? listId.toString().toString() : '',
-        ),
-        {
-          title: newTitle,
-          position: 1, // TODO
+    return this.httpClient.put(
+      this.getListURL(
+        boardId ? boardId.toString() : '',
+        listId ? listId.toString().toString() : '',
+      ),
+      {
+        title: newTitle,
+        position: 1, // TODO
+      },
+      {
+        headers: {
+          Authorization: this.authToken,
         },
-        {
-          headers: {
-            Authorization: this.authToken,
-          },
-        },
-      )
-      .subscribe((response) => {
-        console.log(response);
-      });
+      },
+    );
   }
 
   private getURL(boardId: string): string {

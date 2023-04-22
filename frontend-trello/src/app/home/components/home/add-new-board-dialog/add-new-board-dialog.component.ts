@@ -35,8 +35,7 @@ export class AddNewBoardDialogComponent implements OnInit {
       title: this.form.value.boardTitle ?? '',
       custom: '',
     };
-    this.boardService.createBoard(board);
-    this.dialogRef.close(board);
+    this.boardService.createBoard(board).subscribe(() => this.dialogRef.close(board));
   }
 
   close() {

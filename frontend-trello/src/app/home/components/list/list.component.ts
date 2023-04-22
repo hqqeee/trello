@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Card } from '../../../types/card';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ListService } from '../../services/list.service';
@@ -17,6 +24,8 @@ export class ListComponent implements OnInit {
   @Input() cards: Card[] = [];
 
   @Input() boardId: string | null = '';
+
+  @Output() reloadBoard = new EventEmitter();
 
   editing = false;
 
@@ -40,6 +49,8 @@ export class ListComponent implements OnInit {
   }
 
   private changeTitle(listTitle: string) {
-    this.listService.editListTitle(listTitle, this.id, this.boardId);
+    this.listService
+      .editListTitle(listTitle, this.id, this.boardId)
+      .subscribe(() => this.reloadBoard.emit());
   }
 }
