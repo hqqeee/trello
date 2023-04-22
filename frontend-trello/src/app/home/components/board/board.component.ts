@@ -67,18 +67,22 @@ export class BoardComponent implements OnInit {
   }
 
   openDialog(addListBtn: MatButton) {
+    const dialogWidth = 260;
+    const dialogHeight = 225;
+    const buttonRect = addListBtn._elementRef.nativeElement.getBoundingClientRect();
+
+    const isButtonOutsideViewport = buttonRect.left + dialogWidth > window.innerWidth;
+    const leftPosition = isButtonOutsideViewport
+      ? window.innerWidth - dialogWidth
+      : buttonRect.left;
+
     const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = `${dialogWidth}px`;
+    dialogConfig.height = `${dialogHeight}px`;
     dialogConfig.autoFocus = true;
     dialogConfig.position = {
-      left:
-        addListBtn._elementRef.nativeElement.offsetLeft < window.innerWidth
-          ? addListBtn._elementRef.nativeElement.offsetLeft
-          : window.innerWidth - addListBtn._elementRef.nativeElement.offsetWidth - 35 + 'px', // TODO fix
-      top:
-        addListBtn._elementRef.nativeElement.offsetTop +
-        addListBtn._elementRef.nativeElement.offsetHeight +
-        5 +
-        'px',
+      left: `${leftPosition}px`,
+      top: `${buttonRect.top + buttonRect.height + 5}px`,
     };
     dialogConfig.data = { boardId: this.boardId };
     this.addListDialogRef = this.matDialog.open(AddListDialogComponent, dialogConfig);
