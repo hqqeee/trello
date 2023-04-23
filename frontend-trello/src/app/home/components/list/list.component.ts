@@ -9,6 +9,7 @@ import {
 import { Card } from '../../../types/card';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ListService } from '../../services/list.service';
+import { CardService } from '../../services/card.service';
 
 @Component({
   selector: 'tr-list',
@@ -27,13 +28,24 @@ export class ListComponent implements OnInit {
 
   @Output() reloadBoard = new EventEmitter();
 
+  addingNewCard = false;
+
   editing = false;
 
   changeListTitleForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private listService: ListService) {
+  addNewCardForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private listService: ListService,
+    private cardService: CardService,
+  ) {
     this.changeListTitleForm = formBuilder.group({
       listTitle: ['', [Validators.required, Validators.pattern(/^[a-zA-Zа-яА-Я0-9\s\-._]*$/)]],
+    });
+    this.addNewCardForm = formBuilder.group({
+      cardTitle: ['', [Validators.required, Validators.pattern(/^[a-zA-Zа-яА-Я0-9\s\-._]*$/)]],
     });
   }
 
@@ -52,5 +64,20 @@ export class ListComponent implements OnInit {
     this.listService
       .editListTitle(listTitle, this.id, this.boardId)
       .subscribe(() => this.reloadBoard.emit());
+  }
+
+  submitAddNewCard() {
+    if (this.addNewCardForm.valid) {
+      this.addNewCard(this.addNewCardForm.value.cardTitle);
+      this.addingNewCard = false;
+    }
+  }
+
+  private addNewCard(cardTitle: string) {
+    if (this.boardId && this.id) {
+      this.cardService
+        .createCard(this.boardId, this.id, cardTitle)
+        .subscribe(() => this.reloadBoard.emit());
+    }
   }
 }

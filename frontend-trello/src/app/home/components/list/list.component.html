@@ -8,20 +8,34 @@
         formControlName="listTitle"
         (focusout)="changeListTitleForm.valid && submitChangeTitleForm()"
         (keydown.enter)="changeListTitleForm.valid && submitChangeTitleForm()">
-      <mat-error *ngIf="changeListTitleForm.get('boardTitle')?.hasError('required')">This field is required.</mat-error>
-      <mat-error *ngIf="changeListTitleForm.get('boardTitle')?.hasError('pattern')">Please enter a valid input.</mat-error>
+      <mat-error *ngIf="changeListTitleForm.get('listTitle')?.hasError('required')">This field is required.</mat-error>
+      <mat-error *ngIf="changeListTitleForm.get('listTitle')?.hasError('pattern')">Please enter a valid input.
+      </mat-error>
     </mat-form-field>
     <button mat-icon-button class="edit-button" (click)="editing=false"><i class="material-icons">close</i></button>
   </form>
-    <p *ngFor="let card of cards">
-      <mat-list-item>
+  <p *ngFor="let card of cards">
+    <mat-list-item>
       <mat-card>
         <mat-card-header>
           <tr-card [title]="card.title"></tr-card>
         </mat-card-header>
       </mat-card>
-      </mat-list-item>
-    </p>
+    </mat-list-item>
+  </p>
 
-  <button mat-button>Add card</button>
+  <button *ngIf="!addingNewCard" mat-button (click)="addingNewCard = true">Add card</button>
+  <form *ngIf="addingNewCard" class="add-new-card-form" [formGroup]="addNewCardForm">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <textarea matInput formControlName="cardTitle"></textarea>
+      <mat-error *ngIf="addNewCardForm.get('cardTitle')?.hasError('required')">This field is required.</mat-error>
+      <mat-error *ngIf="addNewCardForm.get('cardTitle')?.hasError('pattern')">Please enter a valid input.
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="add-card-btn" (click)="addNewCardForm.valid && submitAddNewCard()">
+      Add card
+    </button>
+    <button mat-icon-button (click)="addingNewCard=false" class="close-btn"><i class="material-icons">close</i></button>
+  </form>
 </mat-list>

@@ -23,6 +23,19 @@ $main-4: #18122B;
 
   .edit-list {
     display: flex;
-
+  }
+  .add-new-card-form{
+    padding-left: 16px;
+    mat-form-field{
+      width: 158px;
+    }
+    .add-card-btn {
+      font-size: 10px;
+      width: 80px;
+    }
+    .close-btn {
+      margin-left: 10px;
+      font-size: 10px;
+    }
   }
 }
